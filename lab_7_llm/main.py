@@ -169,8 +169,8 @@ class LLMPipeline(AbstractLLMPipeline):
         self._max_length = max_length
         self._batch_size = batch_size
         self._device = device
-        self._tokenizer = AutoTokenizer.from_pretrained(self._model_name)
-        self._model = AutoModelForCausalLM.from_pretrained(self._model_name)
+        self._tokenizer = AutoTokenizer.from_pretrained(self._model_name, padding_side='left')
+        self._model = AutoModelForCausalLM.from_pretrained(self._model_name, torch_dtype=torch.float32)
 
     @report_time
     def infer_sample(self, sample: tuple[str, ...]) -> str | None:
